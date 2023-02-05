@@ -7,7 +7,9 @@ const Layout: FC = () => {
   return (
     <>
       <div className={style.Layout}>
-        <span className={style.logo}>Realworld Blog</span>
+        <Link to="/" className={style.logo}>
+          Realworld Blog
+        </Link>
         <div className={style.panel}>
           <button>Sign In</button>
           <Link to="/" className={style.panel_btnSignup}>
@@ -16,6 +18,7 @@ const Layout: FC = () => {
         </div>
       </div>
       <Outlet />
+      <footer className={style.footer}>2023 © Nikitin Vadim</footer>
     </>
   );
 };

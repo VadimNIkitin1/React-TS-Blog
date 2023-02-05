@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 type IAuthor = {
   username: string;
@@ -21,18 +21,34 @@ type IArticles = {
 
 type IArticlesState = {
   articles: IArticles[];
+  articlesCount: number;
   loading: boolean;
   error: string | null;
 };
 
 const initialState: IArticlesState = {
   articles: [],
+  articlesCount: 0,
   loading: true,
   error: null,
 };
 
 export const fetchArticles = createAsyncThunk<IArticles[], undefined, { rejectValue: string }>(
   'articles/fetchArticles',
+  async function (_, { rejectWithValue }) {
+    const res = await fetch('https://blog.kata.academy/api/articles?limit=5');
+
+    if (!res.ok) {
+      return rejectWithValue('Server Error!!!');
+    }
+
+    const data = await res.json();
+    return data.articles;
+  }
+);
+
+export const fetchArticlesCount = createAsyncThunk<number, undefined, { rejectValue: string }>(
+  'articles/fetchArticlesCount',
   async function (_, { rejectWithValue }) {
     const res = await fetch('https://blog.kata.academy/api/articles');
 
@@ -41,7 +57,7 @@ export const fetchArticles = createAsyncThunk<IArticles[], undefined, { rejectVa
     }
 
     const data = await res.json();
-    return data.articles;
+    return data.articlesCount;
   }
 );
 
@@ -59,6 +75,13 @@ const slice = createSlice({
         state.articles = action.payload;
         state.loading = false;
         state.error = null;
+      })
+      .addCase(fetchArticlesCount.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchArticlesCount.fulfilled, (state, action) => {
+        state.articlesCount = action.payload;
       });
   },
 });
