@@ -61,6 +61,7 @@
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
     "arrow-body-style": "off",
+    "func-names": "off",
 
     "class-methods-use-this": "off",
     "react/no-unused-prop-types": "off",

@@ -33,10 +33,10 @@ const initialState: IArticlesState = {
   error: null,
 };
 
-export const fetchArticles = createAsyncThunk<IArticles[], undefined, { rejectValue: string }>(
+export const fetchArticles = createAsyncThunk<IArticles[], number, { rejectValue: string }>(
   'articles/fetchArticles',
-  async function (_, { rejectWithValue }) {
-    const res = await fetch('https://blog.kata.academy/api/articles?limit=5');
+  async function (current, { rejectWithValue }) {
+    const res = await fetch(`https://blog.kata.academy/api/articles?limit=5&offset=${current * 5}`);
 
     if (!res.ok) {
       return rejectWithValue('Server Error!!!');

@@ -6,12 +6,13 @@ import style from './ArticlePage.module.scss';
 import { textCut } from '../../utils/text';
 import { useParams } from 'react-router-dom';
 import cuid from 'cuid';
+import nonlike from '../../img/heart 1.png';
 
 const ArticlePage: FC = () => {
   const { slug } = useParams();
   const dispatch = useAppDispatch();
-  const { loading, article, error } = useAppSelector((state) => state.article);
-  const { createdAt, author, tagList, title, body } = useAppSelector(
+  const { loading, error } = useAppSelector((state) => state.article);
+  const { createdAt, author, tagList, title, body, description, favoritesCount } = useAppSelector(
     (state) => state.article.article
   );
   const { username, image } = author;
@@ -24,7 +25,9 @@ const ArticlePage: FC = () => {
   const artDate = new Intl.DateTimeFormat('en-Us', dateOptions);
 
   useEffect(() => {
-    dispatch(fetchSingleArticle(slug!));
+    if (slug) {
+      dispatch(fetchSingleArticle(slug));
+    }
   }, [dispatch, slug]);
 
   return (
@@ -32,19 +35,24 @@ const ArticlePage: FC = () => {
       {error && <h2>An error occured: {error}</h2>}
       {loading && <h2>Loading...</h2>}
       <div className={style.artInfo}>
-        <p className={style.title}>{title}</p>
+        <div className={style.title_like}>
+          <p className={style.title}>{title}</p>
+          <img src={nonlike} alt="nonlike" />
+          <p className={style.favoritesCount}>{favoritesCount}</p>
+        </div>
         <p className={style.articlesTags}>
           {tagList.map(
             (t) =>
               t.length &&
               t !== ' ' && (
                 <span key={cuid()} className={style.tags}>
-                  {t}
+                  {`${textCut(t, 15)}`}
                 </span>
               )
           )}
         </p>
-        <ReactMarkdown className={style.articleBody}>{`${textCut(body, 150)}...`}</ReactMarkdown>
+        <p className={style.description}>{description}</p>
+        <ReactMarkdown className={style.articleBody}>{body}</ReactMarkdown>
       </div>
       <div className={style.userInfo}>
         <div>

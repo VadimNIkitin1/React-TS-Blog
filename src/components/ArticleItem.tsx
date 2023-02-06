@@ -1,12 +1,20 @@
-import { FC } from 'react';
 import cuid from 'cuid';
 import { textCut } from '../utils/text';
 import style from './ArticleItem.module.scss';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { Link } from 'react-router-dom';
 import { IArticleIItem } from '../types/types';
+import nonlike from '../img/heart 1.png';
 
-const ArticleItem = ({ title, tagList, body, author, createdAt, slug }: IArticleIItem) => {
+const ArticleItem = ({
+  title,
+  tagList,
+  author,
+  createdAt,
+  slug,
+  description,
+  favoritesCount,
+}: IArticleIItem) => {
   const dateOptions: Intl.DateTimeFormatOptions = {
     day: '2-digit',
     month: 'long',
@@ -17,21 +25,28 @@ const ArticleItem = ({ title, tagList, body, author, createdAt, slug }: IArticle
   return (
     <div className={style.articlesItem}>
       <div className={style.artInfo}>
-        <Link to={`/${slug}`}>
-          <p className={style.title}>{title}</p>
-        </Link>
+        <div className={style.title_like}>
+          <Link to={`/${slug}`}>
+            <p className={style.title}>{title}</p>
+          </Link>
+          <img className={style.like_img} src={nonlike} alt="like" />
+          <p className={style.favoritesCount}>{favoritesCount}</p>
+        </div>
         <p className={style.articlesTags}>
           {tagList.map(
             (t) =>
               t.length &&
               t !== ' ' && (
                 <span key={cuid()} className={style.tags}>
-                  {t}
+                  {`${textCut(t, 15)}`}
                 </span>
               )
           )}
         </p>
-        <ReactMarkdown className={style.articleBody}>{`${textCut(body, 150)}...`}</ReactMarkdown>
+        <ReactMarkdown className={style.description}>{`${textCut(
+          description,
+          200
+        )}...`}</ReactMarkdown>
       </div>
       <div className={style.userInfo}>
         <div>

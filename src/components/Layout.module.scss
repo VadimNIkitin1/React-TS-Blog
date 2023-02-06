@@ -1,6 +1,4 @@
-$green: #52c41a;
-$white: #fff;
-$black: #000;
+@import '../mixins/mixins.module.scss';
 
 .Layout {
   display: flex;
@@ -8,12 +6,14 @@ $black: #000;
   padding: 16px 22px;
   background-color: $white;
 }
+
 .logo {
   font-family: inherit;
   font-size: 18px;
   line-height: 28px;
   color: $black;
 }
+
 .panel {
   display: flex;
   column-gap: 19px;
