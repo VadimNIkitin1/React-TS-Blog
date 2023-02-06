@@ -1,8 +1,8 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { ArticlesList } from '../../components/ArticlesList';
-import { fetchArticles, fetchArticlesCount } from '../../Store/ArticlesSlice';
+import { fetchArticles, fetchArticlesCount, changePage } from '../../Store/ArticlesSlice';
 import { useAppDispatch, useAppSelector } from '../../Store/customHooks';
-import { Pagination } from 'antd';
+import { Alert, Pagination, Space, Spin } from 'antd';
 
 import style from './HomePage.module.scss';
 
@@ -10,12 +10,7 @@ const HomePage: FC = () => {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.articles);
   const articlesCount = useAppSelector((state) => state.articles.articlesCount);
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const changePage = (current: number) => {
-    setCurrentPage(current);
-  };
+  const currentPage = useAppSelector((state) => state.articles.currentPage);
 
   useEffect(() => {
     dispatch(fetchArticles(currentPage - 1));
@@ -24,15 +19,25 @@ const HomePage: FC = () => {
 
   return (
     <div className={style.HomePage}>
-      {loading && <h2>Loading...</h2>}
-      {error && <h2>An error occured: {error}</h2>}
+      {loading && (
+        <div className={style.spin}>
+          <Space size="large">
+            <Spin size="large" />
+          </Space>
+        </div>
+      )}
+      {error && (
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Alert message={error} type="error" />
+        </Space>
+      )}
       <ArticlesList />
       <div className={style.pagination}>
         <Pagination
           defaultCurrent={1}
           total={articlesCount / 5}
           current={currentPage}
-          onChange={changePage}
+          onChange={dispatch(changePage)}
         />
       </div>
     </div>

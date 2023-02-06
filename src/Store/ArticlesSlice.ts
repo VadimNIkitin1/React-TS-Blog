@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 type IAuthor = {
   username: string;
@@ -24,6 +24,7 @@ type IArticlesState = {
   articlesCount: number;
   loading: boolean;
   error: string | null;
+  currentPage: number;
 };
 
 const initialState: IArticlesState = {
@@ -31,6 +32,7 @@ const initialState: IArticlesState = {
   articlesCount: 0,
   loading: true,
   error: null,
+  currentPage: 1,
 };
 
 export const fetchArticles = createAsyncThunk<IArticles[], number, { rejectValue: string }>(
@@ -64,7 +66,11 @@ export const fetchArticlesCount = createAsyncThunk<number, undefined, { rejectVa
 const slice = createSlice({
   name: 'articles',
   initialState,
-  reducers: {},
+  reducers: {
+    changePage(state, action: PayloadAction<number>) {
+      state.currentPage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticles.pending, (state) => {
@@ -85,5 +91,5 @@ const slice = createSlice({
       });
   },
 });
-
+export const { changePage } = slice.actions;
 export default slice.reducer;
