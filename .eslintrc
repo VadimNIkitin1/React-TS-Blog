@@ -62,6 +62,7 @@
     "import/prefer-default-export": "off",
     "arrow-body-style": "off",
     "func-names": "off",
+    "jsx-a11y/label-has-associated-control": "off",
 
     "class-methods-use-this": "off",
     "react/no-unused-prop-types": "off",
