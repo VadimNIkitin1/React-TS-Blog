@@ -6,6 +6,8 @@ import { HomePage } from './pages/HomePage/HomePage';
 import { RegPage } from './pages/RegPage/RegPage';
 import { ArticlePage } from './pages/ArticlePage/ArticlePage';
 import { SignInPage } from './pages/SignInPage/SignInPage';
+import { CreateArticlePage } from './pages/Create Article/CreateArticlePage';
+import { RequireAuth } from './HOC/RequireAuth';
 
 function App() {
   return (
@@ -16,6 +18,14 @@ function App() {
           <Route path="/:slug" element={<ArticlePage />} />
           <Route path="/sign-up" element={<RegPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
+          <Route
+            path="/create-article"
+            element={
+              <RequireAuth>
+                <CreateArticlePage />
+              </RequireAuth>
+            }
+          />
         </Route>
       </Routes>
     </div>

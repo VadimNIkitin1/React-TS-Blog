@@ -6,7 +6,7 @@
 
 .regForm {
   width: 384px;
-  height: 375px;
+  max-height: 100%;
   background-color: $white;
   margin: 60px auto 0 auto;
   padding: 48px 32px;
@@ -42,7 +42,6 @@
 .input {
   margin-top: 2px;
   padding: 12px 8px;
-  color: $lightgrey;
   border: 1px solid $lightgrey;
   border-radius: 4px;
 }
@@ -66,4 +65,10 @@
 .redirect {
   margin-left: 2px;
   color: $blue;
+}
+
+.error {
+  color: $red;
+  font-size: 14px;
+  line-height: 22px;
 }

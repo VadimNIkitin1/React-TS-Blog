@@ -1,12 +1,21 @@
-import { FC, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../Store/customHooks';
+import { useAppDispatch, useAppSelector } from '../Store/customHooks';
+import { getCurrentUser, logOut } from '../Store/AuthSlice';
 
 import style from './Layout.module.scss';
 
 const Layout: FC = () => {
-  const [isAuth, setIsAuth] = useState(false);
-  const { author } = useAppSelector((state) => state.article.article);
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector((state) => state.reg.isAuth);
+  const { username, image } = useAppSelector((state) => state.reg.data);
+
+  useEffect(() => {
+    const myToken = localStorage.getItem('token');
+    if (myToken) {
+      dispatch(getCurrentUser(myToken));
+    }
+  }, []);
 
   return (
     <>
@@ -17,15 +26,17 @@ const Layout: FC = () => {
         {isAuth ? (
           <div className={style.userPanel}>
             <button>
-              <Link to="/" className={style.panel_btnSignup}>
+              <Link to="/create-article" className={style.panel_btnSignup}>
                 Create Article
               </Link>
             </button>
-            <p>{author.username}</p>
+            <p>{username}</p>
             <div className={style.userImg}>
-              <img src={author.image} alt="userImg" />
+              <img src={image} alt="userImg" />
             </div>
-            <button className={style.logoutBtn}>Log Out</button>
+            <button onClick={() => dispatch(logOut())} className={style.logoutBtn}>
+              Log Out
+            </button>
           </div>
         ) : (
           <div className={style.panel}>

@@ -62,3 +62,8 @@ export interface ISubmitForm {
   repeatePass: string;
   checkbox: boolean;
 }
+
+export interface ILoginForm {
+  email: string;
+  password: string;
+}

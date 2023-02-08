@@ -1,22 +1,38 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import style from './SignInPage.module.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ISubmitForm } from '../../types/types';
+import { ILoginForm } from '../../types/types';
+import { ILogin } from '../../model/signup';
+import { useAppDispatch } from '../../Store/customHooks';
+import { login } from '../../Store/AuthSlice';
 
 const SignInPage: FC = () => {
+  const dispatch = useAppDispatch();
+
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     reset,
-  } = useForm<ISubmitForm>({
-    mode: 'onBlur',
+  } = useForm<ILoginForm>({
+    mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<ISubmitForm> = (data: object) => {
-    alert(JSON.stringify(data));
+  const navigate = useNavigate();
+  const location = useLocation();
+  const fromPage = location.state?.from?.pathname || '/';
+
+  const onSubmit: SubmitHandler<ILoginForm> = (data: ILoginForm) => {
+    const requestData: ILogin = {
+      user: {
+        email: data.email,
+        password: data.password,
+      },
+    };
     reset();
+    dispatch(login(requestData));
+    navigate(fromPage, { replace: true });
   };
 
   return (
@@ -44,10 +60,10 @@ const SignInPage: FC = () => {
           <label className={style.inputBlock}>
             Password
             <input
-              {...register('pass', {
+              {...register('password', {
                 required: 'Required field',
                 minLength: {
-                  value: 1,
+                  value: 6,
                   message: 'Your password needs to be at least 6 characters',
                 },
                 maxLength: {
@@ -60,7 +76,7 @@ const SignInPage: FC = () => {
               className={style.input}
             />
           </label>
-          {errors.pass && <p className={style.error}>{errors.pass.message}</p>}
+          {errors.password && <p className={style.error}>{errors.password.message}</p>}
           <button className={style.formBtn}>
             <input type="submit" value="Login" disabled={!isValid} />
           </button>

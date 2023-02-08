@@ -1,10 +1,19 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import style from './RegPage.module.scss';
 import { ISubmitForm } from '../../types/types';
+import { ISignUpRequest } from '../../model/signup';
+import { useAppDispatch } from '../../Store/customHooks';
+import { registration } from '../../Store/AuthSlice';
 
 const RegPage: FC = () => {
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const fromPage = location.state?.from?.pathname || '/';
+
   const {
     register,
     formState: { errors, isValid },
@@ -12,12 +21,21 @@ const RegPage: FC = () => {
     getValues,
     reset,
   } = useForm<ISubmitForm>({
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<ISubmitForm> = (data: object) => {
-    alert(JSON.stringify(data));
+  const onSubmit: SubmitHandler<ISubmitForm> = (data: ISubmitForm) => {
+    const requestData: ISignUpRequest = {
+      user: {
+        username: data.username,
+        email: data.email,
+        password: data.pass,
+      },
+    };
     reset();
+
+    dispatch(registration(requestData));
+    navigate(fromPage, { replace: true });
   };
 
   return (
@@ -86,7 +104,7 @@ const RegPage: FC = () => {
             <input
               {...register('repeatePass', {
                 required: 'Required field!!',
-                validate: (value, allValues) => {
+                validate: (value: string, allValues: ISubmitForm) => {
                   const { pass } = allValues;
                   return pass === value;
                 },
