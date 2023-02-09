@@ -1,7 +1,5 @@
-import cuid from 'cuid';
 import { textCut } from '../utils/text';
 import style from './ArticleItem.module.scss';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { Link } from 'react-router-dom';
 import { IArticleIItem } from '../types/types';
 import nonlike from '../img/heart 1.png';

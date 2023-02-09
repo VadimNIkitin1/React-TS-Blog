@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+
 import { useAppDispatch, useAppSelector } from '../Store/customHooks';
 import { getCurrentUser, logOut } from '../Store/AuthSlice';
 
@@ -30,7 +31,11 @@ const Layout: FC = () => {
                 Create Article
               </Link>
             </button>
-            <p>{username}</p>
+            <p>
+              <Link className={style.username} to="/profile">
+                {username}
+              </Link>{' '}
+            </p>
             <div className={style.userImg}>
               <img src={image} alt="userImg" />
             </div>
