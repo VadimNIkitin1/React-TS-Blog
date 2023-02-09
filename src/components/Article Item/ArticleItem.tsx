@@ -1,8 +1,8 @@
-import { textCut } from '../utils/text';
+import { textCut } from '../../utils/text';
 import style from './ArticleItem.module.scss';
 import { Link } from 'react-router-dom';
-import { IArticleIItem } from '../types/types';
-import nonlike from '../img/heart 1.png';
+import { IArticleIItem } from './types';
+import nonlike from '../../img/heart 1.png';
 
 const ArticleItem = ({
   title,

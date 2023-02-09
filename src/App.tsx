@@ -1,15 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
-
-import { Layout } from './components/Layout';
-import './App.css';
+import { Layout } from './components/Layout/Layout';
 import { HomePage } from './pages/HomePage/HomePage';
 import { RegPage } from './pages/AuthPage/AuthPage';
 import { ArticlePage } from './pages/ArticlePage/ArticlePage';
-import { SignInPage } from './pages/SignInPage/SignInPage';
+import { SignInPage } from './pages/Login Page/LoginPage';
 import { CreateArticlePage } from './pages/Create Article/CreateArticlePage';
 import { RequireAuth } from './HOC/RequireAuth';
 import { EditArticlePage } from './pages/EditArticlePage/EditArticlePage';
 import { EditProfile } from './pages/EditProfilePage/EditProfile';
+import './App.css';
 
 function App() {
   return (

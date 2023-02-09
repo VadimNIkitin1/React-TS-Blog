@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { fetchSingleArticle } from '../../Store/SingleArticleSlice';
+import { fetchSingleArticle } from '../../Store/Reducers/SingleArticleSlice';
 import { useAppDispatch, useAppSelector } from '../../Store/customHooks';
 import style from './ArticlePage.module.scss';
 import { textCut } from '../../utils/text';
