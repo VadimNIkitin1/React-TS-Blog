@@ -4,9 +4,9 @@ import { HomePage } from './pages/HomePage/HomePage';
 import { RegPage } from './pages/AuthPage/AuthPage';
 import { ArticlePage } from './pages/ArticlePage/ArticlePage';
 import { SignInPage } from './pages/Login Page/LoginPage';
-import { CreateArticlePage } from './pages/Create Article/CreateArticlePage';
+import { CreateArticle } from './pages/Create Article/CreateArticle';
 import { RequireAuth } from './HOC/RequireAuth';
-import { EditArticlePage } from './pages/EditArticlePage/EditArticlePage';
+import { EditArticle } from './pages/Edit Article/EditArticle';
 import { EditProfile } from './pages/EditProfilePage/EditProfile';
 import './App.css';
 
@@ -23,7 +23,7 @@ function App() {
             path="/create-article"
             element={
               <RequireAuth>
-                <CreateArticlePage />
+                <CreateArticle />
               </RequireAuth>
             }
           />
@@ -31,7 +31,7 @@ function App() {
             path="/edit-article"
             element={
               <RequireAuth>
-                <EditArticlePage />
+                <EditArticle />
               </RequireAuth>
             }
           />

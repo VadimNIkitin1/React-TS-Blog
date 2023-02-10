@@ -4,7 +4,7 @@ import { fetchSingleArticle } from '../../Store/Reducers/SingleArticleSlice';
 import { useAppDispatch, useAppSelector } from '../../Store/customHooks';
 import style from './ArticlePage.module.scss';
 import { textCut } from '../../utils/text';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import cuid from 'cuid';
 import nonlike from '../../img/heart 1.png';
 
@@ -15,7 +15,8 @@ const ArticlePage: FC = () => {
   const { createdAt, author, tagList, title, body, description, favoritesCount } = useAppSelector(
     (state) => state.article.article
   );
-  const { username, image } = author;
+
+  const { username } = useAppSelector((state) => state.reg.data);
 
   const dateOptions: Intl.DateTimeFormatOptions = {
     day: '2-digit',
@@ -54,14 +55,24 @@ const ArticlePage: FC = () => {
         <p className={style.description}>{description}</p>
         <ReactMarkdown className={style.articleBody}>{body}</ReactMarkdown>
       </div>
-      <div className={style.userInfo}>
-        <div>
-          <p className={style.userName}>{username}</p>
-          <p className={style.userDate}>{artDate.format(new Date(createdAt))}</p>
+      <div className={style.userPanel}>
+        <div className={style.userInfo}>
+          <div>
+            <p className={style.userName}>{author.username}</p>
+            <p className={style.userDate}>{artDate.format(new Date(createdAt))}</p>
+          </div>
+          <div className={style.userImg}>
+            <img src={author.image} alt="userImg" />
+          </div>
         </div>
-        <div className={style.userImg}>
-          <img src={image} alt="userImg" />
-        </div>
+        {author.username === username && (
+          <div className={style.btns}>
+            <button className={style.btns_delete}>Delete</button>
+            <Link to="/edit-article">
+              <button className={style.btns_edit}>Edit</button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

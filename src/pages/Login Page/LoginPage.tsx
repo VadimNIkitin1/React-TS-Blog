@@ -19,8 +19,6 @@ const SignInPage: FC = () => {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const fromPage = location.state?.from?.pathname || '/';
 
   const onSubmit: SubmitHandler<ILoginForm> = (data: ILoginForm) => {
     const requestData: ILogin = {
@@ -31,7 +29,7 @@ const SignInPage: FC = () => {
     };
     reset();
     dispatch(login(requestData));
-    navigate(fromPage, { replace: true });
+    navigate('/', { replace: true });
   };
 
   return (
