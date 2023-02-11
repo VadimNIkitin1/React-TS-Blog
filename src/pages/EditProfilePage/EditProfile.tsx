@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { IEditProfileRequest, ISubmitEditForm } from './types';
 import { useAppDispatch, useAppSelector } from '../../Store/customHooks';
+import { editProfile } from '../../Store/Reducers/EditSlice';
 
 import style from './EditProfile.module.scss';
-import { editProfile } from '../../Store/Reducers/EditSlice';
 
 const EditProfile: FC = () => {
   const dispatch = useAppDispatch();
@@ -25,14 +25,12 @@ const EditProfile: FC = () => {
   });
 
   const onSubmit: SubmitHandler<ISubmitEditForm> = (data: ISubmitEditForm) => {
-    const myToken = localStorage.getItem('token');
     const requestData: IEditProfileRequest = {
       user: {
         username: data.username,
         email: data.email,
         password: data.password,
         image: data.image,
-        token: myToken!,
       },
     };
     reset();
@@ -41,11 +39,11 @@ const EditProfile: FC = () => {
   };
 
   return (
-    <div className={style.RegPage}>
-      <div className={style.regForm}>
-        <h2 className={style.formTitle}>Edit Profile</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
-          <label className={style.inputBlock}>
+    <div className={style.EditProfile}>
+      <div className={style.EditProfile_form}>
+        <h2 className={style.EditProfile_title}>Edit Profile</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className={style.input_form}>
+          <label className={style.input_block}>
             Username
             <input
               {...register('username', {
@@ -68,7 +66,7 @@ const EditProfile: FC = () => {
             />
           </label>
           {errors.username && <p className={style.error}>{errors.username.message}</p>}
-          <label className={style.inputBlock}>
+          <label className={style.input_block}>
             Email address
             <input
               {...register('email', {
@@ -85,7 +83,7 @@ const EditProfile: FC = () => {
             />
           </label>
           {errors.email && <p className={style.error}>{errors.email.message} </p>}
-          <label className={style.inputBlock}>
+          <label className={style.input_block}>
             Password
             <input
               {...register('password', {
@@ -105,7 +103,7 @@ const EditProfile: FC = () => {
             />
           </label>
           {errors.password && <p className={style.error}>{errors.password.message}</p>}
-          <label className={style.inputBlock}>
+          <label className={style.input_block}>
             Avatar image(url)
             <input
               {...register('image', {
@@ -117,11 +115,11 @@ const EditProfile: FC = () => {
             />
           </label>
           {errors.image && <p className={style.error}>{errors.image.message}</p>}
-          <button className={style.formBtn}>
+          <button className={style.EditProfile_btn}>
             <input type="submit" value="Create" disabled={!isValid} />
           </button>
         </form>
-        <div className={style.formFooter}>
+        <div className={style.EditProfile_footer}>
           Already have an account?{' '}
           <Link to="/sign-in">
             <p className={style.redirect}>Sign In.</p>

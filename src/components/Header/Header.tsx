@@ -17,32 +17,32 @@ const Header: FC = () => {
   }, []);
   return (
     <div className={style.Header}>
-      <Link to="/" className={style.logo}>
+      <Link to="/" className={style.Header_logo}>
         Realworld Blog
       </Link>
       {isAuth ? (
-        <div className={style.userPanel}>
+        <div className={style.user_panel}>
           <button>
-            <Link to="/create-article" className={style.panel_btnSignup}>
+            <Link to="/create-article" className={style.btn_auth}>
               Create Article
             </Link>
           </button>
           <p>
-            <Link className={style.username} to="/profile">
+            <Link className={style.user_name} to="/profile">
               {username}
             </Link>{' '}
           </p>
-          <div className={style.userImg}>
+          <div className={style.user_img}>
             <img src={image} alt="userImg" />
           </div>
-          <button onClick={() => dispatch(logOut())} className={style.logoutBtn}>
+          <button onClick={() => dispatch(logOut())} className={style.btn_logout}>
             Log Out
           </button>
         </div>
       ) : (
-        <div className={style.panel}>
+        <div className={style.Header_panel}>
           <button>
-            <Link to="/sign-in" className={style.sign_in}>
+            <Link to="/sign-in" className={style.btn_login}>
               Sign In
             </Link>
           </button>
