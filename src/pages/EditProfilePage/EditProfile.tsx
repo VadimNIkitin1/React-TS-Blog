@@ -84,7 +84,7 @@ const EditProfile: FC = () => {
           </label>
           {errors.email && <p className={style.error}>{errors.email.message} </p>}
           <label className={style.input_block}>
-            Password
+            New password
             <input
               {...register('password', {
                 required: 'Required field',
@@ -116,15 +116,9 @@ const EditProfile: FC = () => {
           </label>
           {errors.image && <p className={style.error}>{errors.image.message}</p>}
           <button className={style.EditProfile_btn}>
-            <input type="submit" value="Create" disabled={!isValid} />
+            <input type="submit" value="Save" disabled={!isValid} />
           </button>
         </form>
-        <div className={style.EditProfile_footer}>
-          Already have an account?{' '}
-          <Link to="/sign-in">
-            <p className={style.redirect}>Sign In.</p>
-          </Link>{' '}
-        </div>
       </div>
     </div>
   );

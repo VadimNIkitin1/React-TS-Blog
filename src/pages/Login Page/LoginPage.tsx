@@ -36,7 +36,7 @@ const SignInPage: FC = () => {
     <div className={style.LoginPage}>
       <div className={style.LoginPage_form}>
         <h2 className={style.LoginPage_title}>Sign in</h2>
-        <form onChange={handleSubmit(onSubmit)} className={style.input_form}>
+        <form onSubmit={handleSubmit(onSubmit)} className={style.input_form}>
           <label className={style.input_block}>
             Email address
             <input
