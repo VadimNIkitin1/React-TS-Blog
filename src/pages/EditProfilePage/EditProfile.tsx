@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { IEditProfileRequest, ISubmitEditForm } from './types';
 import { useAppDispatch, useAppSelector } from '../../Store/customHooks';
