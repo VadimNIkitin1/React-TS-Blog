@@ -15,6 +15,7 @@ const Header: FC = () => {
       dispatch(getCurrentUser(myToken));
     }
   }, []);
+
   return (
     <div className={style.Header}>
       <Link to="/" className={style.Header_logo}>

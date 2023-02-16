@@ -6,7 +6,7 @@ const initialState: IArticlesState = {
   articlesCount: 0,
   loading: true,
   error: null,
-  currentPage: 1,
+  currentPage: Number(localStorage.getItem('page')) + 1,
 };
 
 const isError = (action: AnyAction) => {
@@ -17,6 +17,7 @@ export const fetchArticles = createAsyncThunk<IArticle[], number, { rejectValue:
   'articles/fetchArticles',
   async function (current, { rejectWithValue }) {
     const token = localStorage.getItem('token');
+    localStorage.setItem('page', String(current));
     const res = await fetch(
       `https://blog.kata.academy/api/articles?limit=5&offset=${current * 5}`,
       {

@@ -1,12 +1,14 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IAuthRequest, ISubmitForm } from './types';
-import { useAppDispatch } from '../../Store/customHooks';
+import { useAppDispatch, useAppSelector } from '../../Store/customHooks';
 import { registration } from '../../Store/Reducers/AuthSlice';
 import style from './AuthPage.module.scss';
+import { Alert, Space } from 'antd';
 
-const RegPage: FC = () => {
+const AuthPage: FC = () => {
+  const { error, isAuth } = useAppSelector((state) => state.reg);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -30,13 +32,22 @@ const RegPage: FC = () => {
       },
     };
     reset();
-
     dispatch(registration(requestData));
-    navigate('/', { replace: true });
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/', { replace: true });
+    }
+  }, [isAuth]);
 
   return (
     <div className={style.AuthPage}>
+      {error && (
+        <Space direction="vertical" style={{ width: '100%', alignItems: 'center' }}>
+          <Alert message={error} type="error" />
+        </Space>
+      )}
       <div className={style.AuthForm}>
         <h2 className={style.AuthForm_title}>Create new account</h2>
         <form onSubmit={handleSubmit(onSubmit)} className={style.input_form}>
@@ -130,7 +141,7 @@ const RegPage: FC = () => {
             I agree to the processing of my personal information
           </label>
           {errors.checkbox && <p className={style.error}>{errors.checkbox.message}</p>}
-          <button className={style.formBtn}>
+          <button className={style.input_btn}>
             <input type="submit" value="Create" disabled={!isValid} />
           </button>
         </form>
@@ -144,4 +155,4 @@ const RegPage: FC = () => {
     </div>
   );
 };
-export { RegPage };
+export { AuthPage };

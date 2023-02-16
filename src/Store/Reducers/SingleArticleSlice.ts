@@ -68,7 +68,7 @@ export const setLike = createAsyncThunk<IArticle, string, { rejectValue: string 
     });
 
     if (!response.ok) {
-      return rejectWithValue('Cant delete this article!');
+      return rejectWithValue('Cant set like!');
     }
 
     return (await response.json()).article as IArticle;
@@ -88,7 +88,7 @@ export const deleteLike = createAsyncThunk<IArticle, string, { rejectValue: stri
     });
 
     if (!response.ok) {
-      return rejectWithValue('Cant delete this article!');
+      return rejectWithValue('Cant delete this like!');
     }
 
     return (await response.json()).article as IArticle;

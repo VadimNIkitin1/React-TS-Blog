@@ -1,7 +1,8 @@
 @import '../../mixins/mixins.module.scss';
 
 .LoginPage {
-  height: 100vh;
+  min-height: 770px;
+  padding-top: 100px;
   &_form {
     width: 384px;
     max-height: 100%;

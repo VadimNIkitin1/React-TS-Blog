@@ -46,10 +46,11 @@ export const registration = createAsyncThunk<IResponse, IAuthRequest, { rejectVa
     });
 
     if (!response.ok) {
-      return rejectWithValue('Cant add new user!');
+      return rejectWithValue('Email or Username is already taken!!!');
     }
 
     const data = await response.json();
+    localStorage.setItem('token', data.user.token);
     return data.user as IResponse;
   }
 );
@@ -66,7 +67,7 @@ export const login = createAsyncThunk<IResponse, ILogin, { rejectValue: string }
     });
 
     if (!responseLogin.ok) {
-      return rejectWithValue('Cant add new user!');
+      return rejectWithValue('Login or Password is wrong!');
     }
     const data = await responseLogin.json();
     const user = data.user as IResponse;
@@ -137,7 +138,7 @@ const slice = createSlice({
         state.isAuth = true;
       })
       .addCase(logOut.fulfilled, (state) => {
-        state.isAuth = !state.isAuth;
+        state.isAuth = false;
       })
       .addMatcher(isError, (state, action: PayloadAction<string>) => {
         state.error = action.payload;

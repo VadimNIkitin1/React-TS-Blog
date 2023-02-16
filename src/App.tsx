@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout/Layout';
 import { HomePage } from './pages/HomePage/HomePage';
-import { RegPage } from './pages/AuthPage/AuthPage';
+import { AuthPage } from './pages/AuthPage/AuthPage';
 import { ArticlePage } from './pages/ArticlePage/ArticlePage';
-import { SignInPage } from './pages/Login Page/LoginPage';
+import { LoginPage } from './pages/Login Page/LoginPage';
 import { CreateArticle } from './pages/Create Article/CreateArticle';
 import { RequireAuth } from './HOC/RequireAuth';
 import { EditArticle } from './pages/Edit Article/EditArticle';
@@ -17,8 +17,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="/:slug" element={<ArticlePage />} />
-          <Route path="/sign-up" element={<RegPage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<AuthPage />} />
+          <Route path="/sign-in" element={<LoginPage />} />
           <Route
             path="/create-article"
             element={

@@ -18,6 +18,7 @@ const ArticlePage: FC = () => {
   const { loading, error } = useAppSelector((state) => state.article);
   const { createdAt, author, tagList, title, body, description, favoritesCount, favorited } =
     useAppSelector((state) => state.article.article);
+  const { isAuth } = useAppSelector((state) => state.reg);
 
   const navigate = useNavigate();
 
@@ -75,7 +76,7 @@ const ArticlePage: FC = () => {
         <div className={style.card_info}>
           <div className={style.card_title}>
             <p className={style.card_title__title}>{title}</p>
-            <button onClick={handleClick}>
+            <button onClick={handleClick} disabled={!isAuth}>
               <img src={favorited ? like : nonlike} alt="like" />
             </button>
             <p className={style.card_title__likeCount}>{favoritesCount}</p>
