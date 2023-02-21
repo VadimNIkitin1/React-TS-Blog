@@ -5,14 +5,12 @@ import { useAppDispatch, useAppSelector } from '../../Store/customHooks';
 import { Alert, Pagination, Space, Spin } from 'antd';
 
 import style from './HomePage.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 const HomePage: FC = () => {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.articles);
   const articlesCount = useAppSelector((state) => state.articles.articlesCount);
   const currentPage = useAppSelector((state) => state.articles.currentPage);
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchArticles(currentPage - 1));
